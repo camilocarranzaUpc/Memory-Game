@@ -2,12 +2,14 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import GameView from '../views/GameView.vue'
 import ScoreView from '../views/ScoreView.vue'
+import NotFoundView from '../views/NotFoundView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
+      alias: '/home',
       name: 'home',
       component: HomeView
     },
@@ -20,6 +22,11 @@ const router = createRouter({
       path: '/score',
       name: 'score',
       component: ScoreView
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: NotFoundView
     }
     // {
     //   path: '/about',

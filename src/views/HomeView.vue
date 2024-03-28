@@ -1,9 +1,17 @@
-<script setup>
-import TheWelcome from '../components/TheWelcome.vue'
-</script>
-
 <template>
   <main>
-    <TheWelcome />
+    <div>Memory Game</div>
+    <div>
+      <div>New Game</div>
+      <div>
+        <div>Scoreboard</div>
+        <div>About</div>
+      </div>
+    </div>
   </main>
 </template>
+
+<script setup>
+
+
+</script>
