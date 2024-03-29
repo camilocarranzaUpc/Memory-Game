@@ -9,6 +9,7 @@ export const useGameStore = defineStore({
         gameStatus: "setup", // setup, playing, gameover
         cardsTheme: null,
         pairsNumber: null,
+        deck: [],
     }),
     getters: {
         scoreText() {
@@ -29,9 +30,10 @@ export const useGameStore = defineStore({
         this.settings = !this.settings
         },
         startGame(pairsNumber, cardsTheme) {
-        this.gameStatus = "playing"
         this.pairsNumber = pairsNumber
         this.cardsTheme = cardsTheme
+        this.gameStatus = "playing"
+        this.deck = this.buildDeck()
         },
         gameOver() {
         this.gameStatus = "gameover"
@@ -41,6 +43,16 @@ export const useGameStore = defineStore({
         this.score = 0
         this.cardsTheme = null
         this.pairsNumber = null
+        this.deck = []
+        },
+        buildDeck() {
+        const deck = []
+        for (let i = 0; i < this.pairsNumber; i++) {
+            deck.push({ id: i * 2, image: `img${i + 1}`, theme: `img${this.cardsTheme}`, flipped: false })
+            deck.push({ id: i * 2 + 1, image: `img${i + 1}`, theme: `img${this.cardsTheme}`, flipped: false })
+        }
+        // Shuffle the deck
+        return deck.sort(() => Math.random() - 0.5)
         }
     },
     })
