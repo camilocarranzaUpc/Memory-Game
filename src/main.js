@@ -7,9 +7,9 @@ import App from './App.vue'
 import router from './router'
 
 import { OhVueIcon, addIcons } from "oh-vue-icons";
-import { FaGithub, FaArrowAltCircleLeft, BiGearFill, FaSun, FaMoon, GiSoundOn, GiSoundOff} from "oh-vue-icons/icons";
+import { FaGithub, FaArrowAltCircleLeft, BiGearFill, FaSun, FaMoon, GiSoundOn, GiSoundOff, FaWindowClose} from "oh-vue-icons/icons";
 
-addIcons(FaGithub,FaArrowAltCircleLeft,BiGearFill,FaSun,FaMoon, GiSoundOn, GiSoundOff);
+addIcons(FaGithub,FaArrowAltCircleLeft,BiGearFill,FaSun,FaMoon, GiSoundOn, GiSoundOff, FaWindowClose);
 
 const app = createApp(App)
 
