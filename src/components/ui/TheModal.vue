@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center">
+  <div class="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
     <div class="modal bg-themeBackground text-themeText shadow-lg overflow-y-auto flex flex-col rounded-md max-w-md sm:max-w-md mx-auto">
       <header class="p-4 lilita-one-regular flex relative border-b border-gray-200 justify-between text-xl">
         <slot name="header">

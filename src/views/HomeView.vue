@@ -12,7 +12,7 @@
       <menu-box @click="showModal = true">About</menu-box>
     </div>
     <transition name="bounce">
-      <the-modal v-if="showModal" @close="showModal = false">
+      <the-modal v-show="showModal" @close="showModal = false">
         <template #header>
           <h2>About The Game</h2>
         </template>

@@ -43,16 +43,18 @@
 <script setup>
 //import pinia store
 import { useGlobalStore } from "@/stores/global";
-import { watch, ref, defineEmits, computed, onMounted } from "vue";
+import { useGameStore } from "@/stores/game";
+import { watch, ref, computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import AudioPlayer from "@/components/ui/AudioPlayer.vue";
 
 
 const store = useGlobalStore();
+const gameStore = useGameStore();
 const route = useRoute();
 const router = useRouter();
 
-const emits = defineEmits(["toogleSettings"]);
+// const emits = defineEmits(["toogleSettings"]);
 
 const title = ref('home');
 
@@ -76,7 +78,7 @@ function goGithub() {
 }
 
 function toogleSettings() {
-    emits("toogleSettings");
+    gameStore.toggleSettings();
 }
 
 //watch route change
