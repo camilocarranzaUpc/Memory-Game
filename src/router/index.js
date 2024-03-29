@@ -19,8 +19,8 @@ const router = createRouter({
       component: GameView
     },
     {
-      path: '/score',
-      name: 'score',
+      path: '/scoreboard',
+      name: 'scoreboard',
       component: ScoreView
     },
     {

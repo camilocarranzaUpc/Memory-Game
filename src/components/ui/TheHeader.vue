@@ -14,7 +14,7 @@
             class="text-lg cursor-pointer" 
             animation="wrench" 
             hover scale="2" 
-            v-show="title === 'score' || title === 'not-found'"
+            v-show="title === 'scoreboard' || title === 'not-found'"
             @click="goHome"
         />
         <v-icon 
@@ -34,7 +34,6 @@
             animation="wrench" 
             hover scale="1.5" 
             :fill="isDarkMode ? '#3B82F6' : '#FFB84C'"
-            v-show="title === 'home'"
             @click="switchTheme"
         />    
     </div>
