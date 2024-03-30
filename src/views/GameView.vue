@@ -33,7 +33,7 @@
             </div> 
         </template>
         <template #footer>
-              <router-link class="lilita-one-regular bg-themeText text-themeBackground p-2 rounded-md" :to="{ name: 'scoreboard'}">Go to Scoreboard</router-link>
+              <button @click="goScoreboard" class="lilita-one-regular bg-themeText text-themeBackground p-2 rounded-md">Go to Scoreboard</button>
         </template>
     </the-modal>
     </transition>
@@ -43,13 +43,16 @@
 <script setup>
 import { computed, ref } from "vue";
 import { useGameStore } from "@/stores/game";
-import { onBeforeRouteLeave } from "vue-router";
+import { useScoreboardStore } from "@/stores/scoreboard";
+import { onBeforeRouteLeave, useRouter } from "vue-router";
 import TheModal from "@/components/ui/TheModal.vue";
 import MenuBox from "@/components/ui/MenuBox.vue";
 import SetUp from "@/components/game/SetUp.vue";
 import Game from "@/components/game/TheGame.vue";
 
 const gameStore = useGameStore();
+const scoreboardStore = useScoreboardStore();
+const router = useRouter();
 
 const gameStatus = computed(() => gameStore.getGameStatus);
 const showModal = computed(() => gameStore.settingsStatus);
@@ -80,7 +83,11 @@ function shuffleCards() {
 }
 
 function goScoreboard() {
-    console.log("goScoreboard");
+    scoreboardStore.addScore({
+        score: gameStore.getScore,
+        time: gameStore.getTime,
+    });
+    router.push({ name: "scoreboard" });
 }
 
 onBeforeRouteLeave(() => {
