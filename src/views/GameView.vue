@@ -9,7 +9,7 @@
             <div class="flex flex-col justify-center items-center">
                 <menu-box @click="restartGame">Restart Game</menu-box>
                 <menu-box><router-link :to="{ name: 'home'}">Quit Game</router-link></menu-box>
-                <menu-box v-show="gameStatus === 'playing'">Remix Cards</menu-box>
+                <menu-box v-show="gameStatus === 'playing'" @click="shuffleCards">Remix Cards</menu-box>
             </div> 
         </template>
         <template #footer>
@@ -20,6 +20,22 @@
     <transition name="slide" mode="out-in">
         <set-up v-if="gameStatus === 'setup'" @start="startGame"/>
         <game v-else/>
+    </transition>
+    <transition name="bounce">
+    <the-modal v-show="gameStatus === 'gameover'" @close="goScoreboard">
+        <template #header>
+            <p>Congratulations</p>
+        </template>
+        <template #body>
+            <div class="flex flex-col justify-center items-center">
+                <menu-box>Final Score: {{ gameStore.getScore }}</menu-box>
+                <menu-box>Time elapsed: {{ time }}</menu-box>
+            </div> 
+        </template>
+        <template #footer>
+              <router-link class="lilita-one-regular bg-themeText text-themeBackground p-2 rounded-md" :to="{ name: 'scoreboard'}">Go to Scoreboard</router-link>
+        </template>
+    </the-modal>
     </transition>
 </div>
 </template>
@@ -37,6 +53,11 @@ const gameStore = useGameStore();
 
 const gameStatus = computed(() => gameStore.getGameStatus);
 const showModal = computed(() => gameStore.settingsStatus);
+const time = computed(() => {
+    const minutes = Math.floor(gameStore.getTime / 60);
+    const seconds = gameStore.getTime % 60;
+    return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
+});
 
 function closeModal() {
     gameStore.toggleSettings();
@@ -49,6 +70,17 @@ function startGame(pairsNumber, selectedCard) {
 function restartGame() {
     closeModal();
     gameStore.restartGame();
+}
+
+function shuffleCards() {
+    closeModal();
+    setTimeout(() => {
+        gameStore.shuffleDeck();
+    }, 1000);
+}
+
+function goScoreboard() {
+    console.log("goScoreboard");
 }
 
 onBeforeRouteLeave(() => {

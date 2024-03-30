@@ -1,7 +1,7 @@
 <template>
     <div class="flex-grow flex flex-col text-themeText justify-center items-center gap-2">
-        <div class="grid grid-rows-4 grid-flow-col gap-2">
-        <the-card v-for="(card, index) in cards" :card="card" :key="index">
+        <transition-group tag="div" name="fade" class="grid grid-rows-4 grid-flow-col gap-2">
+        <the-card v-for="(card, index) in cards" :card="card" :key="index" @flip="flipCard">
             <template  #front>
                 <div class="bg-themeText text-themeBackground p-2 rounded-md cursor-pointer"
                     :class="cardSize"
@@ -17,12 +17,12 @@
                 </div>
             </template>
         </the-card>
-        </div>
+        </transition-group>
     </div>
 </template>
 
 <script setup>
-import { computed, ref, onMounted, onUnmounted } from 'vue'
+import { computed, ref, onMounted, onUnmounted, watch } from 'vue'
 import { useGameStore } from '@/stores/game'
 import TheCard from './TheCard.vue'
 
@@ -30,6 +30,7 @@ const gameStore = useGameStore()
 const cards = computed(() => gameStore.getCards)
 const size = computed(() => cards.value.length)
 const windowWidth = ref(window.innerWidth)
+const isGameOver = computed(() => gameStore.getCards.every(card => card.block))
 
 const updateWindowWidth = () => {
     windowWidth.value = window.innerWidth
@@ -61,4 +62,41 @@ const cardSize = computed(() => {
         return 'w-12 h-12'
     }
 })
+
+const flipCard = (cardId) => {
+    gameStore.flipCard(cardId)
+    if(gameStore.getFlippedCards.length === 2) {
+        gameStore.checkMatch()
+    }
+    
+}
+
+//watch if all cards are matched (card.value.blocked = true)
+watch(isGameOver, (value) => {
+    if(value) {
+        gameStore.gameOver()
+    }
+})
+
 </script>
+
+<style scoped>
+.fade-move,
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+/* 2. declare enter from and leave to state */
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: scaleY(0.01) translate(30px, 0);
+}
+
+/* 3. ensure leaving items are taken out of layout flow so that moving
+      animations can be calculated correctly. */
+.fade-leave-active {
+  position: absolute;
+}
+</style>

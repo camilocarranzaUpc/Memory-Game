@@ -16,6 +16,7 @@ import { ref } from 'vue'
 import { useGameStore } from '@/stores/game'
 
 const gameStore = useGameStore()
+const emits = defineEmits(['flip'])
 
 const props = defineProps({
     card: Object,
@@ -23,7 +24,8 @@ const props = defineProps({
 })
 
 function flipCard() {
-    gameStore.flipCard(props.card.id)
+    emits('flip', props.card.id)
+    // gameStore.flipCard(props.card.id)
 }
 
 </script>

@@ -8,9 +8,11 @@ import router from './router'
 
 import { OhVueIcon, addIcons } from "oh-vue-icons";
 import { FaGithub, FaArrowAltCircleLeft, BiGearFill, FaSun, FaMoon,
-         GiSoundOn, GiSoundOff, FaWindowClose, BiPlusCircleFill, BiDashCircleFill} from "oh-vue-icons/icons";
+         GiSoundOn, GiSoundOff, FaWindowClose, BiPlusCircleFill, BiDashCircleFill,
+         MdSportsscore, IoTimeSharp} from "oh-vue-icons/icons";
 
-addIcons(FaGithub,FaArrowAltCircleLeft,BiGearFill,FaSun,FaMoon, GiSoundOn, GiSoundOff, FaWindowClose, BiPlusCircleFill, BiDashCircleFill);
+addIcons(FaGithub,FaArrowAltCircleLeft,BiGearFill,FaSun,FaMoon, GiSoundOn, GiSoundOff, FaWindowClose, 
+         BiPlusCircleFill, BiDashCircleFill, MdSportsscore, IoTimeSharp);
 
 const app = createApp(App)
 
