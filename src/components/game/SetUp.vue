@@ -19,7 +19,7 @@
                     class="text-lg cursor-pointer" 
                     animation="wrench" 
                     hover scale="2" 
-                    v-show="pairsNumber < 15"
+                    v-show="pairsNumber < 16"
                     @click="pairsNumber++"
                 />
             </div>

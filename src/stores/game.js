@@ -9,6 +9,7 @@ export const useGameStore = defineStore({
         gameStatus: "setup", // setup, playing, gameover
         cardsTheme: null,
         pairsNumber: null,
+        time: 0,
         deck: [],
     }),
     getters: {
@@ -20,6 +21,9 @@ export const useGameStore = defineStore({
         },
         getGameStatus() {
         return this.gameStatus
+        },
+        getCards() {
+        return this.deck
         }
     },
     actions: {
@@ -44,6 +48,7 @@ export const useGameStore = defineStore({
         this.cardsTheme = null
         this.pairsNumber = null
         this.deck = []
+        this.time = 0
         },
         buildDeck() {
         const deck = []
@@ -53,6 +58,10 @@ export const useGameStore = defineStore({
         }
         // Shuffle the deck
         return deck.sort(() => Math.random() - 0.5)
+        },
+        flipCard(cardId) {
+        const card = this.deck.find((card) => card.id === cardId)
+        card.flipped = !card.flipped
         }
     },
     })
