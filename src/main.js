@@ -9,10 +9,10 @@ import router from './router'
 import { OhVueIcon, addIcons } from "oh-vue-icons";
 import { FaGithub, FaArrowAltCircleLeft, BiGearFill, FaSun, FaMoon,
          GiSoundOn, GiSoundOff, FaWindowClose, BiPlusCircleFill, BiDashCircleFill,
-         MdSportsscore, IoTimeSharp, MdDeleteforever, MdAdsclickOutlined} from "oh-vue-icons/icons";
+         MdSportsscore, IoTimeSharp, MdDeleteforever, MdAdsclickOutlined, FaMedal} from "oh-vue-icons/icons";
 
 addIcons(FaGithub,FaArrowAltCircleLeft,BiGearFill,FaSun,FaMoon, GiSoundOn, GiSoundOff, FaWindowClose, 
-         BiPlusCircleFill, BiDashCircleFill, MdSportsscore, IoTimeSharp, MdDeleteforever, MdAdsclickOutlined);
+         BiPlusCircleFill, BiDashCircleFill, MdSportsscore, IoTimeSharp, MdDeleteforever, MdAdsclickOutlined, FaMedal);
 
 const app = createApp(App)
 
