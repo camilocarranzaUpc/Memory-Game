@@ -19,8 +19,7 @@
         <template #body>
           <p>The Cartoon Memory Game is a web-based game that challenges players to match pairs of cards. The game is built 
             using <b>Vue.js</b> and <b>Vite</b> for fast and efficient development, with <b>TailwindCSS</b> for styling and responsive design. <b>Pinia</b> is used as a 
-            state manager to handle game logic, while <b>Oh Vue Icons!</b> provides a library of icons for enhanced visual appeal. <b>Vitest</b> is used 
-            for testing to ensure the game is functioning correctly.</p>
+            state manager to handle game logic, while <b>Oh Vue Icons!</b> provides a library of icons for enhanced visual appeal. The website was deployed using <b>Firebase</b> for easy and reliable hosting.</p>
         </template>
         <template #footer>
           <button @click="showModal = false" class="lilita-one-regular bg-themeText text-themeBackground p-2 rounded-md">I Got it!</button>
