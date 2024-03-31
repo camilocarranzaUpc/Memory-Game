@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useGameStore } from '@/stores/game'
 
 const gameStore = useGameStore()
@@ -20,13 +20,19 @@ const emits = defineEmits(['flip'])
 
 const props = defineProps({
     card: Object,
+    block: Boolean
     // size: Number
 })
 
 function flipCard() {
-    emits('flip', props.card.id)
+    if(!props.block) emits('flip', props.card.id)
     // gameStore.flipCard(props.card.id)
 }
+
+watch(() => props.card.flipped, () => {
+    const flipSound = new Audio('/audio/flip.mp3');
+    flipSound.play();
+})
 
 </script>
 

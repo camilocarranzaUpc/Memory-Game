@@ -7,7 +7,7 @@
         hover scale="1.5"
         @click="toggle"
     />
-    <audio ref="audioRef" loop autoplay>
+    <audio ref="audioRef" loop>
     <source src="../../assets/audio/lofi.mp3" type="audio/mpeg">
     </audio>
 </div>
@@ -41,7 +41,9 @@ const toggle = () => {
 
 onMounted(() => {
     audioRef.value.volume = 0.3;
-    if (props.soundOn) { emits('switchSound')}
+    if (props.soundOn) { 
+        play()
+    }
 });
 
 </script>

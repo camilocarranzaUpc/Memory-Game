@@ -1,18 +1,23 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { set } from '@vueuse/core'
 
 export const useGameStore = defineStore({
     id: 'game',
     state: () => ({
         score: 0,
+        movesNumber: 0,
         settings: false,
         gameStatus: "setup", // setup, playing, gameover
         cardsTheme: null,
         pairsNumber: null,
         time: 0,
+        innerTime: 0,
         deck: [],
         flippedCards: [],
-        timerId: null
+        timerId: null,
+        innerTimerId: null,
+        blockDeck: false
     }),
     getters: {
         scoreText() {
@@ -35,11 +40,26 @@ export const useGameStore = defineStore({
         },
         getFlippedCards() {
         return this.flippedCards
+        },
+        getPairsNumber() {
+        return this.pairsNumber
+        },
+        getMovesNumber() {
+        return this.movesNumber
+        },
+        getBlockedStatus() {
+            return this.blockDeck
         }
     },
     actions: {
         incrementScore() {
-        this.score++
+            const scoreIncrement = Math.max(10 - this.innerTime, 1); // Minimum score increment is 1
+            this.score += scoreIncrement;
+            clearInterval(this.innerTimerId);
+            this.innerTimerId = null;
+            this.innerTime = 0;
+            this.incrementInnerTime();
+
         },
         toggleSettings() {
         this.settings = !this.settings
@@ -50,6 +70,7 @@ export const useGameStore = defineStore({
         this.gameStatus = "playing"
         this.deck = this.buildDeck()
         this.incrementTime()
+        this.incrementInnerTime()
         },
         gameOver() {
         this.gameStatus = "gameover"
@@ -57,6 +78,10 @@ export const useGameStore = defineStore({
         if (this.timerId) {
             clearInterval(this.timerId);
             this.timerId = null;
+        }
+        if (this.innerTimerId) {
+            clearInterval(this.innerTimerId);
+            this.innerTimerId = null;
         }
         },
         restartGame() {
@@ -68,6 +93,21 @@ export const useGameStore = defineStore({
         this.time = 0
         this.flippedCards = []
         this.timerId = null
+        this.innerTime = 0
+        this.innerTimerId = null
+        this.movesNumber = 0
+        },
+        quitGame() {
+            if (this.timerId) {
+                clearInterval(this.timerId);
+                this.timerId = null;
+            }
+            if (this.innerTimerId) {
+                clearInterval(this.innerTimerId);
+                this.innerTimerId = null;
+            }
+            this.restartGame()
+
         },
         buildDeck() {
         const deck = []
@@ -87,6 +127,7 @@ export const useGameStore = defineStore({
         card.flipped = !card.flipped
         this.flippedCards.push(cardId)
         card.block = true
+        this.movesNumber++
         }
         },
         incrementTime() {
@@ -95,7 +136,14 @@ export const useGameStore = defineStore({
                 this.time++
             }, 1000)
         },
+        incrementInnerTime() {
+            // Increment the time every second
+            this.innerTimerId = setInterval(() => {
+                this.innerTime++
+            }, 1000)
+        },
         checkMatch() {
+            this.blockDeck = true
             const [firstCard, secondCard] = this.flippedCards
             const card1 = this.deck.find((card) => card.id === firstCard)
             const card2 = this.deck.find((card) => card.id === secondCard)
@@ -104,6 +152,7 @@ export const useGameStore = defineStore({
                 this.flippedCards = []
                 card1.block = true
                 card2.block = true
+                this.blockDeck = false
             } else {
                 
                 setTimeout(() => {
@@ -113,7 +162,11 @@ export const useGameStore = defineStore({
                     card1.flipped = false
                     card2.flipped = false
                 }, 500)
+               setTimeout(() => {
+                this.blockDeck = false
+               }, 600)
             }
+            
         },
     },
     })

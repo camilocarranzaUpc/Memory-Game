@@ -31,7 +31,7 @@
                     :class="{ 'border-2 border-[#bdbcbc] rounded-lg': selectedCard === index }"
                     @click="selectCard(index)"
                 >
-                    <img :src="`/src/assets/themes/img${index}.jpg`" :alt="`img${index}.jpg`" class="rounded-lg">
+                    <img :src="`/themes/img${index}.jpg`" :alt="`img${index}.jpg`" class="rounded-lg">
                 </div>
             </div>
         </div>

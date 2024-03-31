@@ -7,9 +7,9 @@
         </template>
         <template #body>
             <div class="flex flex-col justify-center items-center">
-                <menu-box @click="restartGame">Restart Game</menu-box>
-                <menu-box><router-link :to="{ name: 'home'}">Quit Game</router-link></menu-box>
-                <menu-box v-show="gameStatus === 'playing'" @click="shuffleCards">Remix Cards</menu-box>
+                <menu-box v-if="gameStatus === 'playing'" @click="restartGame">Restart Game</menu-box>
+                <menu-box @click="goHome">Quit Game</menu-box>
+                <menu-box v-if="gameStatus === 'playing'" @click="shuffleCards">Remix Cards</menu-box>
             </div> 
         </template>
         <template #footer>
@@ -33,7 +33,7 @@
             </div> 
         </template>
         <template #footer>
-              <button @click="goScoreboard" class="lilita-one-regular bg-themeText text-themeBackground p-2 rounded-md">Go to Scoreboard</button>
+              <button @click="restartGame" class="lilita-one-regular bg-themeText text-themeBackground p-2 rounded-md">Restart Game</button>
         </template>
     </the-modal>
     </transition>
@@ -41,7 +41,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useGameStore } from "@/stores/game";
 import { useScoreboardStore } from "@/stores/scoreboard";
 import { onBeforeRouteLeave, useRouter } from "vue-router";
@@ -71,8 +71,19 @@ function startGame(pairsNumber, selectedCard) {
 }
 
 function restartGame() {
-    closeModal();
+    if(showModal.value) closeModal();
+    scoreboardStore.addScore({
+        score: gameStore.getScore,
+        time: gameStore.getTime,
+        pairs: gameStore.getPairsNumber,
+        moves: gameStore.getMovesNumber
+    });
     gameStore.restartGame();
+}
+
+function goHome() {
+    router.push({ name: "home" });
+    gameStore.quitGame();
 }
 
 function shuffleCards() {
@@ -86,9 +97,18 @@ function goScoreboard() {
     scoreboardStore.addScore({
         score: gameStore.getScore,
         time: gameStore.getTime,
+        pairs: gameStore.getPairsNumber,
+        moves: gameStore.getMovesNumber
     });
     router.push({ name: "scoreboard" });
 }
+
+watch(gameStatus, (status) => {
+    if(status === "gameover") {
+        const flipSound = new Audio('/audio/win.mp3');
+        flipSound.play();
+    }
+});
 
 onBeforeRouteLeave(() => {
     if(showModal.value) {

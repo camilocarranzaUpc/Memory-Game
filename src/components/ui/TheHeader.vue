@@ -40,6 +40,17 @@
     <div v-show="title === 'game' && gameStore.getGameStatus === 'playing'">
         <div class="flex items-center gap-2">
             <v-icon 
+            name="md-adsclick-outlined" 
+            class="text-lg" 
+            animation="wrench" 
+            hover scale="2" 
+        />
+        <span>{{ gameStore.getMovesNumber }}</span>
+        </div>
+    </div>
+    <div v-show="title === 'game' && gameStore.getGameStatus === 'playing'">
+        <div class="flex items-center gap-2">
+            <v-icon 
             name="io-time-sharp" 
             class="text-lg" 
             animation="wrench" 

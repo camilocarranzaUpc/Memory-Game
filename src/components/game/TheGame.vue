@@ -1,19 +1,19 @@
 <template>
-    <div class="flex-grow flex flex-col text-themeText justify-center items-center gap-2">
+    <div class="flex-grow flex flex-col text-themeText justify-center items-center gap-2 ">
         <transition-group tag="div" name="fade" class="grid grid-rows-4 grid-flow-col gap-2">
-        <the-card v-for="(card, index) in cards" :card="card" :key="index" @flip="flipCard">
+        <the-card v-for="(card, index) in cards" :card="card" :key="index" @flip="flipCard" :block="isBlocked">
             <template  #front>
                 <div class="bg-themeText text-themeBackground p-2 rounded-md cursor-pointer"
                     :class="cardSize"
                 >
-                    <img :src="`/src/assets/themes/${card.theme}.jpg`" alt="">
+                    <img :src="`/themes/${card.theme}.jpg`" alt="">
                 </div>
             </template >
             <template  #back>
                 <div class="bg-themeText text-themeBackground p-2 rounded-md cursor-pointer"
                     :class="cardSize"
                 >
-                    <img :src="`/src/assets/doodles/${card.image}.jpg`" alt="">
+                    <img :src="`/doodles/${card.image}.jpg`" alt="">
                 </div>
             </template>
         </the-card>
@@ -31,6 +31,7 @@ const cards = computed(() => gameStore.getCards)
 const size = computed(() => cards.value.length)
 const windowWidth = ref(window.innerWidth)
 const isGameOver = computed(() => gameStore.getCards.every(card => card.block))
+const isBlocked = computed(() => gameStore.getBlockedStatus)
 
 const updateWindowWidth = () => {
     windowWidth.value = window.innerWidth
