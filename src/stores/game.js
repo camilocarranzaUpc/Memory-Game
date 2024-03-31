@@ -92,8 +92,10 @@ export const useGameStore = defineStore({
         this.deck = []
         this.time = 0
         this.flippedCards = []
+        if (this.timerId) clearInterval(this.timerId)
         this.timerId = null
         this.innerTime = 0
+        if (this.innerTimerId) clearInterval(this.innerTimerId)
         this.innerTimerId = null
         this.movesNumber = 0
         },

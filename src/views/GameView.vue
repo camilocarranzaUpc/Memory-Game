@@ -49,6 +49,7 @@ import TheModal from "@/components/ui/TheModal.vue";
 import MenuBox from "@/components/ui/MenuBox.vue";
 import SetUp from "@/components/game/SetUp.vue";
 import Game from "@/components/game/TheGame.vue";
+import { set } from "@vueuse/core";
 
 const gameStore = useGameStore();
 const scoreboardStore = useScoreboardStore();
@@ -72,13 +73,17 @@ function startGame(pairsNumber, selectedCard) {
 
 function restartGame() {
     if(showModal.value) closeModal();
-    scoreboardStore.addScore({
-        score: gameStore.getScore,
-        time: gameStore.getTime,
-        pairs: gameStore.getPairsNumber,
-        moves: gameStore.getMovesNumber
-    });
-    gameStore.restartGame();
+    if(gameStatus.value === "gameover"){
+      scoreboardStore.addScore({
+          score: gameStore.getScore,
+          time: gameStore.getTime,
+          pairs: gameStore.getPairsNumber,
+          moves: gameStore.getMovesNumber
+      });
+    }
+    setTimeout(() => {
+        gameStore.restartGame();
+    }, 500);
 }
 
 function goHome() {
