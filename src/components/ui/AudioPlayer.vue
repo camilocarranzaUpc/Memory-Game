@@ -23,6 +23,7 @@ const emits = defineEmits(['switchSound'])
 
 
 const play = () => {
+    audioRef.value.volume = 0.3;
     audioRef.value.play().catch((error) => {
         audioRef.value.muted = false;
         audioRef.value.play();
@@ -38,12 +39,5 @@ const toggle = () => {
     else { pause() }
     emits('switchSound')
 };
-
-onMounted(() => {
-    audioRef.value.volume = 0.3;
-    if (props.soundOn) { 
-        play()
-    }
-});
 
 </script>

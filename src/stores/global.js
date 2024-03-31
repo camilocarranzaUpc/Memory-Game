@@ -5,7 +5,7 @@ export const useGlobalStore = defineStore({
     id: 'global',
     state: () => ({
         darkMode: false || localStorage.getItem('darkMode') === 'dark',
-        sound: false || localStorage.getItem('sound') === 'on',
+        sound: false,
     }),
     getters: {
         isDarkMode() {
@@ -21,8 +21,7 @@ export const useGlobalStore = defineStore({
             localStorage.setItem('darkMode', this.darkMode ? 'dark' : 'light');
         },
         toggleSound() {
-            this.sound = !this.sound
-            localStorage.setItem('sound', this.sound ? 'on' : 'off');
+            this.sound = !this.sound;
         }
     },
     })
